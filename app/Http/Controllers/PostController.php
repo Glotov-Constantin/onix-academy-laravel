@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostStoreUpdateFormRequest;
+use App\Http\Requests\UserUpdateFormRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -20,12 +22,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\PostStoreUpdateFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreUpdateFormRequest $request)
     {
-        //
     }
 
     /**
@@ -42,13 +43,12 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\PostStoreUpdateFormRequest  $request
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostStoreUpdateFormRequest $request, Post $post)
     {
-        //
     }
 
     /**
