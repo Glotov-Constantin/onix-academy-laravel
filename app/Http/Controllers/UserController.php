@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserUpdateFormRequest;
+use App\Http\Requests\UpdateFormRequest;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,7 +12,7 @@ class UserController extends Controller
         echo 'Profile method';
     }
 
-    public function update(UserUpdateFormRequest $request)
+    public function update(UpdateFormRequest $request)
     {
         $validated = $request->validated();
         if (!empty($validated['errors'])){

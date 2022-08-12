@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostStoreUpdateFormRequest;
-use App\Http\Requests\UserUpdateFormRequest;
+use App\Http\Requests\SavePostRequest;
+use App\Http\Requests\UpdateFormRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+//use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -16,7 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return view('posts.index', [
+            'posts'=>Post::all(),
+        ]);
     }
 
     /**
@@ -25,7 +28,7 @@ class PostController extends Controller
      * @param  App\Http\Requests\PostStoreUpdateFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostStoreUpdateFormRequest $request)
+    public function store(SavePostRequest $request)
     {
     }
 
@@ -37,7 +40,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
     }
 
     /**
@@ -47,7 +49,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostStoreUpdateFormRequest $request, Post $post)
+    public function update(SavePostRequest $request, Post $post)
     {
     }
 
@@ -59,6 +61,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+    }
+
+    /**
+     * @return View
+     */
+    public function create(): View{
+        return view('post.create');
     }
 }

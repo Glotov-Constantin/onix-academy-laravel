@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostStoreUpdateFormRequest extends FormRequest
+class SavePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,8 +31,8 @@ class PostStoreUpdateFormRequest extends FormRequest
             'cover' => 'mimes:png,jpeg,gif'
         ];
     }
-    public function withValidator($validator)
-    {
-        return $validator;
-    }
+//    public function withValidator($validator)
+//    {
+//        return $validator;
+//    }
 }
