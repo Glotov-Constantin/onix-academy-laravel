@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateFormRequest;
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
 //use Illuminate\Http\Request;
+use DB;
 
 class PostController extends Controller
 {
@@ -17,19 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = DB::table('posts')->paginate(6);
         return view('posts.index', [
-            'posts'=>Post::all(),
+            'posts'=>$posts,
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  App\Http\Requests\PostStoreUpdateFormRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(SavePostRequest $request)
-    {
     }
 
     /**
@@ -38,35 +30,9 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
+        return view('posts.show', ['post' => $post]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  App\Http\Requests\PostStoreUpdateFormRequest  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(SavePostRequest $request, Post $post)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
-    {
-    }
-
-    /**
-     * @return View
-     */
-    public function create(): View{
-        return view('post.create');
-    }
 }

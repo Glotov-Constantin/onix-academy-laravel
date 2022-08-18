@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,19 +15,27 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\PostController::class, 'index']);
+Route::get('/', [PostController::class, 'index']);
 
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth');
-
+Auth::routes();
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', function() {
+    return view('admin');
+})->name('admin')->middleware('auth');
 
 Route::prefix('posts')->group(function (){
     Route::get('/', [PostController::class, 'index']);
-    Route::get('/store', [PostController::class, 'store']);
-    Route::get('/show', [PostController::class, 'show']);
-    Route::get('/update', [PostController::class, 'update']);
-    Route::get('/destroy', [PostController::class, 'destroy']);
-    Route::get('/posts/new', [PostController::class, 'create']);
+    Route::get('/{post}', [PostController::class, 'show']);
+});
+
+Route::prefix('admin/posts')->group(function (){
+    Route::get('/', [\App\Http\Controllers\admin\PostController::class, 'index']);
+    Route::post('/', [\App\Http\Controllers\admin\PostController::class, 'store']);
+    Route::get('/new', [\App\Http\Controllers\admin\PostController::class, 'create']);
+    Route::get('/{post}', [\App\Http\Controllers\admin\PostController::class, 'show']);
+    Route::post('/{post}', [\App\Http\Controllers\admin\PostController::class, 'update']);
+    Route::get('/{post}/destroy', [\App\Http\Controllers\admin\PostController::class, 'destroy']);
 });

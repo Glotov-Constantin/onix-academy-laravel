@@ -11,10 +11,10 @@ class SavePostRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return false;
-    }
+//    public function authorize()
+//    {
+////        return false;
+//    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -25,10 +25,10 @@ class SavePostRequest extends FormRequest
     {
         return [
             'title' => 'required|min:5|max:150',
-            'keywords' =>'',
+//            'keywords' =>'',
             'text' => 'required|min:10',
-            'email' => 'required|unique:posts|max:255',
-            'cover' => 'mimes:png,jpeg,gif'
+//            'email' => 'required|unique:posts|max:255',
+//            'cover' => 'mimes:png,jpeg,gif'
         ];
     }
 //    public function withValidator($validator)
