@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        return response()->json(Post::all(), 200);
+    }
+
     public function show(Post $post)
     {
         return response()->json($post, 200);
