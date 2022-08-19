@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('post')->group(function (){
-    Route::get('/', [PostController::class, 'index']);
-    Route::get('/store', [PostController::class, 'store']);
-    Route::get('/show', [PostController::class, 'show']);
-    Route::get('/update', [PostController::class, 'update']);
-    Route::get('/destroy', [PostController::class, 'destroy']);
+Route::prefix('api/posts')->group(function (){
+    Route::get('/', [\App\Http\Controllers\Api\PostController::class, 'index']);
+    Route::get('/store', [\App\Http\Controllers\Api\PostController::class, 'store']);
+    Route::get('/show', [\App\Http\Controllers\Api\PostController::class, 'show']);
+    Route::get('/update', [\App\Http\Controllers\Api\PostController::class, 'update']);
+    Route::get('/destroy', [\App\Http\Controllers\Api\PostController::class, 'destroy']);
+});
+
+Route::prefix('api/users')->group(function (){
+    Route::get('/', [\App\Http\Controllers\Api\UserController::class, 'index']);
 });
