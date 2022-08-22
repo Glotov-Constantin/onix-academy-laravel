@@ -19,8 +19,13 @@
                 </ul>
             </div>
         @endif
-
+        @csrf
+        @method('put')
         <button type="submit">Save changes</button>
     </form>
-    <a href="/admin/posts/{{$post->id}}/destroy">Delete post</a>
+    <form action="/admin/posts/{{$post->id}}/destroy" type="submit" method="post">
+        @csrf
+        @method('delete')
+        <button type="submit">Delete post</button>
+    </form>
 @endsection

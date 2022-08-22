@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SavePostRequest;
+use App\Http\Requests\UpdateFormRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -19,25 +20,34 @@ class PostController extends Controller
         return response()->json($post, 200);
     }
 
-    public function store(SavePostRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-
-        $post = new Post();
-        $post->title = $data['title'];
-        $post->text = $data['text'];
+        $post= new Post ();
+        $post->title=$request->title;
+        $post->text=$request->text;
+        $post->id=$request->id;
         $post->save();
-
-        return response()->json($post, 200);
+        if ($post){
+            return response()->json('Post created', 200);
+        }
+        else{
+            return response()->json('Created post has been failed');
+        }
     }
 
-    public function update(SavePostRequest $request, Post $post)
+    public function update(Request $request)
     {
-        $data = $request->validated();
-        $post->title = $data['title'];
-        $post->text = $data['text'];
+        $post=Post::find($request->id);
+        $post->title=$request->title;
+        $post->text=$request->text;
+        $post->id=$request->id;
         $post->save();
-        return response()->json($post, 200);
+        if ($post){
+            return response()->json('Post updated', 200);
+        }
+        else{
+            return response()->json('Update has been failed');
+        }
     }
 
     public function destroy(Post $post)

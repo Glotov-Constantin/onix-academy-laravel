@@ -36,6 +36,6 @@ Route::prefix('admin/posts')->group(function (){
     Route::post('/', [\App\Http\Controllers\admin\PostController::class, 'store']);
     Route::get('/new', [\App\Http\Controllers\admin\PostController::class, 'create']);
     Route::get('/{post}', [\App\Http\Controllers\admin\PostController::class, 'show']);
-    Route::post('/{post}', [\App\Http\Controllers\admin\PostController::class, 'update']);
-    Route::get('/{post}/destroy', [\App\Http\Controllers\admin\PostController::class, 'destroy']);
+    Route::put('/{post}', [\App\Http\Controllers\admin\PostController::class, 'update']);
+    Route::delete('/{post}/destroy', [\App\Http\Controllers\admin\PostController::class, 'destroy']);
 });

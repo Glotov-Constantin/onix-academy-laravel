@@ -22,10 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('posts')->group(function (){
     Route::get('/', [\App\Http\Controllers\Api\PostController::class, 'index']);
-//    Route::get('/', [\App\Http\Controllers\Api\PostController::class, 'store']);
+    Route::post('/create', [\App\Http\Controllers\Api\PostController::class, 'store']);
 //    Route::get('/{post}', [\App\Http\Controllers\Api\PostController::class, 'show']);
-    Route::get('/{post}', [\App\Http\Controllers\Api\PostController::class, 'update']);
-    Route::get('/{post}/destroy', [\App\Http\Controllers\Api\PostController::class, 'destroy']);
+    Route::put('/{post}', [\App\Http\Controllers\Api\PostController::class, 'update']);
+    Route::delete('/{post}', [\App\Http\Controllers\Api\PostController::class, 'destroy']);
 });
 
 Route::prefix('users')->group(function (){
