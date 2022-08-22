@@ -15,9 +15,9 @@ class UserController extends Controller
     public function update(UpdateFormRequest $request)
     {
         $validated = $request->validated();
-        if (!empty($validated['errors'])){
-            return response($validated['errors'],422);
-        }
+//        if (!empty($validated['errors'])){
+//            return response($validated['errors'],422);
+//        }
         // The blog post is valid...
     }
 
