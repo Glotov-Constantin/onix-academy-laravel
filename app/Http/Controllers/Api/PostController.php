@@ -5,19 +5,33 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdateFormRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Post::all(), 200);
+//        return response()->json(Post::all(), 200);
+
+        if($request->has('title') || $request->has('text')){
+            $query = Post::query();
+            if($request->has('title')){
+                $query->where('title' ,'like','%'.$request->get ('title').'%');
+            }
+            if($request->has('text')){
+                $query->where('text' ,'like','%'.$request->get ('text').'%');
+            }
+            return PostResource::collection( $query->paginate(6));
+        }else{
+            return PostResource::collection( Post::paginate(6));
+        }
     }
 
     public function show(Post $post)
     {
-        return response()->json($post, 200);
+        return new PostResource($post);
     }
 
     public function store(Request $request)
