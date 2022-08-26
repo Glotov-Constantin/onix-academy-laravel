@@ -16,8 +16,16 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        if($request->has('startDate') || $request->has('endDate') || $request->has('email')) {
-            $query = User::query();
+        $query = User::query()->select([
+            'users.id',
+            'users.name',
+            'users.email',
+            'users.created_at',
+            'users.updated_at',
+            DB::raw('count(posts.id) posts_count')
+        ])
+            ->leftJoin('posts','posts.user_id','=', 'users.id');
+
             if($request->has('startDate')){
                 $query->whereDate('created_at' ,'>=',$request->get('startDate'));
             }
@@ -27,27 +35,29 @@ class UserController extends Controller
             if($request->has('email')){
                 $query->where('email' ,'like',$request->get('email').'%');
             }
-            return UserResource::collection( $query->paginate(6));
-        }else{
+            if($request->has('sortBy')){
+                if ($request->get('sortBy') == 'top'){
+                    $query->orderBy('posts_count', 'DESC');
+                }
+            }
+            if($request->has('authors')){
+                if ($request->get('authors') == 'true'){
+                    $query->having('posts_count', '>',0);
+                }
+            }
 
-            return UserResource::collection(User::query()
-                ->select([
-                    'users.id',
-                    'users.name',
-                    'users.email',
-                    'users.created_at',
-                    'users.updated_at',
-                    DB::raw('count(posts.id) as posts_count')
-                ])
-                ->join('posts','posts.user_id','=', 'users.id')
-                ->groupBy('posts.user_id')
-                ->paginate(6));
+    $res = $query
+
+            ->groupBy('users.id')
+            ->paginate(100);
+
+            return UserResource::collection($res);
+    //                ->sortBy('posts_count'));
         }
-    }
 
-    public function show(User $user)
-    {
-        return new UserResource($user);
-    }
+        public function show(User $user)
+        {
+            return new UserResource($user);
+        }
 
-}
+    }

@@ -7,6 +7,7 @@ use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdateFormRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -39,8 +40,17 @@ class PostController extends Controller
         $post= new Post ();
         $post->title=$request->title;
         $post->text=$request->text;
-        $post->id=$request->id;
+        $post->user_id=$request->user_id;
+//        $post->id=$request->id;
+
         $post->save();
+        if ($request->has('tag')){
+//            $tag=new Tag();
+//            $tag->name=$request->get('tag');
+//            $post->tags()->save($tag);
+            $post->applyTagByName($request->get('tag'));
+        }
+//        $post->save();
         if ($post){
             return response()->json('Post created', 200);
         }
@@ -54,7 +64,26 @@ class PostController extends Controller
         $post=Post::find($request->id);
         $post->title=$request->title;
         $post->text=$request->text;
-        $post->id=$request->id;
+//        $post->id=$request->id;
+        if ($request->has('tag')){
+            $post->applyTagByName($request->get('tag'));
+//            if($post->tags()->count()==0){
+//                $tag=new Tag();
+////                var_dump($post->tags); die ();
+//                $tag->name=$request->get('tag');
+//                $post->tags()->save($tag);
+//            } else{
+//                foreach ($post->tags as $tag){
+//                    $tag->name=$request->get('tag');
+//                    $tag->save();
+//                    break;
+//                }
+////                $post->tags->name=$request->get('tag');
+////                $post->tags()->save();
+//            }
+        }
+
+
         $post->save();
         if ($post){
             return response()->json('Post updated', 200);

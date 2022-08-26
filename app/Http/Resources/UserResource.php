@@ -20,7 +20,9 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'posts_count' =>$this->posts_count
+            'posts_count_from_sql' =>$this->posts_count,
+            'posts_count_from_model'=>$this->posts()->count(),
+            'posts' =>$this->posts,
         ];
     }
 }
