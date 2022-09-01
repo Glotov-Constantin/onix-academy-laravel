@@ -21,14 +21,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('posts')->group(function (){
-    Route::get('/', [\App\Http\Controllers\Api\PostController::class, 'index']);
-    Route::post('/create', [\App\Http\Controllers\Api\PostController::class, 'store']);
-    Route::get('/{post}', [\App\Http\Controllers\Api\PostController::class, 'show']);
-    Route::put('/{post}', [\App\Http\Controllers\Api\PostController::class, 'update']);
-    Route::delete('/{post}', [\App\Http\Controllers\Api\PostController::class, 'destroy']);
+    Route::get('my', [\App\Http\Controllers\Api\PostController::class, 'my']);
+    Route::get('search', [\App\Http\Controllers\Api\PostController::class, 'search']);
+    Route::post('create', [\App\Http\Controllers\Api\PostController::class, 'store']);
+    Route::get('{post}', [\App\Http\Controllers\Api\PostController::class, 'show']);
+    Route::put('{post}', [\App\Http\Controllers\Api\PostController::class, 'update']);
+    Route::delete('{post}', [\App\Http\Controllers\Api\PostController::class, 'destroy']);
+    Route::get('', [\App\Http\Controllers\Api\PostController::class, 'index']);
 });
 
 Route::prefix('users')->group(function (){
-    Route::get('/', [\App\Http\Controllers\Api\UserController::class, 'index']);
-    Route::get('/{user}', [\App\Http\Controllers\Api\UserController::class, 'show']);
+    Route::get('', [\App\Http\Controllers\Api\UserController::class, 'index']);
+    Route::get('{user}', [\App\Http\Controllers\Api\UserController::class, 'show']);
 });

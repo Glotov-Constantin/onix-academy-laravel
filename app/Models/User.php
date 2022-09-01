@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -52,4 +53,64 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * @param Builder $query
+     * @param $startDate
+     */
+
+    public function scopeWhereStartDate($query, $startDate){
+        if(!empty($startDate) && is_string($startDate)){
+            $query->whereDate('users.created_at' ,'>=', $startDate);
+        }
+    }
+
+    /**
+     * @param Builder $query
+     * @param $endDate
+     */
+
+    public function scopeWhereEndDate($query, $endDate){
+        if(!empty($endDate) && is_string($endDate)){
+            $query->whereDate('users.updated_at' ,'<=', $endDate);
+        }
+    }
+
+    /**
+     * @param Builder $query
+     * @param $email
+     */
+
+    public function scopeWhereEmail($query, $email){
+        if(!empty($email) && is_string($email)){
+            $query->where('users.email' ,'like',$email.'%');
+        }
+    }
+
+    /**
+     * @param Builder $query
+     * @param $sortBy
+     */
+
+    public function scopeWhereSortBy($query, $sortBy){
+            if ($sortBy == 'top'){
+                $query->orderBy('posts_count', 'DESC');
+        }
+
+    }
+
+    /**
+     * @param Builder $query
+     * @param $authors
+     */
+
+    public function scopeWhereAuthors($query, $authors){
+        if ($authors == 'true'){
+            $query->having('posts_count', '>',0);
+        }
+
+    }
+
 }
+
+

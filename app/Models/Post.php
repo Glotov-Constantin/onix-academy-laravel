@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Traits\Scopes\FilterTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Query\Builder;
 use phpDocumentor\Reflection\Types\String_;
 
 /**
@@ -13,6 +15,7 @@ use phpDocumentor\Reflection\Types\String_;
 
 class Post extends Model
 {
+    use FilterTrait;
     use HasFactory;
     function user(){
         return $this->belongsTo(User::class);
@@ -36,6 +39,28 @@ class Post extends Model
         }
         $this->tags()->save($tag);
         $this->save();
+    }
+
+    /**
+     * @param Builder $query
+     * @param $title
+     */
+    public function scopeWhereTitle($query, $title){
+        if(!empty($title) && is_string($title)){
+            $query->where('title' ,'like','%'.$title.'%');
+        }
+    }
+
+    /**
+     * @param Builder $query
+     * @param $text
+     */
+
+    public function scopeWhereText($query, $text){
+        if(!empty($text) && is_string($text)){
+            $query->where('text' ,'like','%'.$text.'%');
+        }
+
     }
 
 }

@@ -8,26 +8,23 @@ use App\Http\Requests\UpdateFormRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index(Request $request)
     {
-//        return response()->json(Post::all(), 200);
 
-        if($request->has('title') || $request->has('text')){
+//        if($request->has('title') || $request->has('text')){
             $query = Post::query();
-            if($request->has('title')){
-                $query->where('title' ,'like','%'.$request->get ('title').'%');
-            }
-            if($request->has('text')){
-                $query->where('text' ,'like','%'.$request->get ('text').'%');
-            }
+            $query->whereTitle($request->get('title', ''));
+            $query->whereText($request->get('text', ''));
+            $query->whereId($request->get('id', ''));
             return PostResource::collection( $query->paginate(6));
-        }else{
-            return PostResource::collection( Post::paginate(6));
-        }
+//        }else{
+//            return PostResource::collection( Post::paginate(6));
+//        }
     }
 
     public function show(Post $post)
@@ -41,16 +38,10 @@ class PostController extends Controller
         $post->title=$request->title;
         $post->text=$request->text;
         $post->user_id=$request->user_id;
-//        $post->id=$request->id;
-
         $post->save();
         if ($request->has('tag')){
-//            $tag=new Tag();
-//            $tag->name=$request->get('tag');
-//            $post->tags()->save($tag);
             $post->applyTagByName($request->get('tag'));
         }
-//        $post->save();
         if ($post){
             return response()->json('Post created', 200);
         }
@@ -64,25 +55,9 @@ class PostController extends Controller
         $post=Post::find($request->id);
         $post->title=$request->title;
         $post->text=$request->text;
-//        $post->id=$request->id;
         if ($request->has('tag')){
             $post->applyTagByName($request->get('tag'));
-//            if($post->tags()->count()==0){
-//                $tag=new Tag();
-////                var_dump($post->tags); die ();
-//                $tag->name=$request->get('tag');
-//                $post->tags()->save($tag);
-//            } else{
-//                foreach ($post->tags as $tag){
-//                    $tag->name=$request->get('tag');
-//                    $tag->save();
-//                    break;
-//                }
-////                $post->tags->name=$request->get('tag');
-////                $post->tags()->save();
-//            }
         }
-
 
         $post->save();
         if ($post){
@@ -97,5 +72,19 @@ class PostController extends Controller
     {
         $post->delete();
         return response()->json('The post was deleted', 200);
+    }
+
+    public function my(Request $request)
+    {
+        $query = Post::query();
+        $query->whereUserAuth();
+        return PostResource::collection( $query->paginate(6));
+    }
+
+    public function search(Request $request)
+    {
+        $query = Post::query();
+        $query->whereUserAuth($request->get('userId'));
+        return PostResource::collection( $query->paginate(6));
     }
 }

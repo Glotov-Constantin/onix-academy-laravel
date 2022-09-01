@@ -27,15 +27,15 @@ Route::get('/admin', function() {
 })->name('admin')->middleware('auth');
 
 Route::prefix('posts')->group(function (){
-    Route::get('/', [PostController::class, 'index']);
-    Route::get('/{post}', [PostController::class, 'show']);
+    Route::get('', [PostController::class, 'index']);
+    Route::get('{post}', [PostController::class, 'show']);
 });
 
 Route::prefix('admin/posts')->group(function (){
-    Route::get('/', [\App\Http\Controllers\admin\PostController::class, 'index']);
-    Route::post('/', [\App\Http\Controllers\admin\PostController::class, 'store']);
-    Route::get('/new', [\App\Http\Controllers\admin\PostController::class, 'create']);
-    Route::get('/{post}', [\App\Http\Controllers\admin\PostController::class, 'show']);
-    Route::put('/{post}', [\App\Http\Controllers\admin\PostController::class, 'update']);
-    Route::delete('/{post}/destroy', [\App\Http\Controllers\admin\PostController::class, 'destroy']);
+    Route::get('', [\App\Http\Controllers\admin\PostController::class, 'index']);
+    Route::post('', [\App\Http\Controllers\admin\PostController::class, 'store']);
+    Route::get('new', [\App\Http\Controllers\admin\PostController::class, 'create']);
+    Route::get('{post}', [\App\Http\Controllers\admin\PostController::class, 'show']);
+    Route::put('{post}', [\App\Http\Controllers\admin\PostController::class, 'update']);
+    Route::delete('{post}/destroy', [\App\Http\Controllers\admin\PostController::class, 'destroy']);
 });

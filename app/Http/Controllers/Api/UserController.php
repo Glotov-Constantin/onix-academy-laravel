@@ -25,34 +25,15 @@ class UserController extends Controller
             DB::raw('count(posts.id) posts_count')
         ])
             ->leftJoin('posts','posts.user_id','=', 'users.id');
+            $query->whereStartDate($request->get('startDate', ''));
+            $query->whereEndDate($request->get('endDate', ''));
+            $query->whereEmail($request->get('email', ''));
+            $query->whereSortBy($request->get('sortBy', ''));
+            $query->whereAuthors($request->get('authors', ''));
 
-            if($request->has('startDate')){
-                $query->whereDate('created_at' ,'>=',$request->get('startDate'));
-            }
-            if($request->has('endDate')){
-                $query->whereDate('created_at' ,'<=',$request->get('endDate'));
-            }
-            if($request->has('email')){
-                $query->where('email' ,'like',$request->get('email').'%');
-            }
-            if($request->has('sortBy')){
-                if ($request->get('sortBy') == 'top'){
-                    $query->orderBy('posts_count', 'DESC');
-                }
-            }
-            if($request->has('authors')){
-                if ($request->get('authors') == 'true'){
-                    $query->having('posts_count', '>',0);
-                }
-            }
-
-    $res = $query
-
-            ->groupBy('users.id')
-            ->paginate(100);
-
-            return UserResource::collection($res);
-    //                ->sortBy('posts_count'));
+            return UserResource::collection($query
+                ->groupBy('users.id')
+                ->paginate(100));
         }
 
         public function show(User $user)
