@@ -287,13 +287,41 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+
         [
-            'text'        => 'Posts',
-            'url'         => 'admin/posts',
-            'icon'        => 'far fa-fw fa-file',
-//            'label'       => 4,
-            'label_color' => 'success',
+            'text' => 'Posts',
+            'url'  => 'admin/posts',
+            'icon' => 'far fa-file  col-2 p-0', // mr-2
+            'submenu' => [
+                [
+                    'text'=>'List',
+                    'url'=>'admin/posts',
+                    'icon'=>'far fa-list-alt col-2 p-0'
+                ],[
+                    'text'=>'Add',
+                    'url'=>'admin/posts/new',
+                    'icon'=>'far fa-plus-square col-2 p-0'
+                ],
+            ]
         ],
+
+        [
+            'text' => 'Tags',
+            'url'  => 'admin/tags',
+            'icon' => 'far fa-file-alt col-2 p-0', // mr-2
+            'submenu' => [
+                [
+                    'text'=>'List',
+                    'url'=>'admin/tags',
+                    'icon'=>'far fa-list-alt col-2 p-0'
+                ],[
+                    'text'=>'Add',
+                    'url'=>'admin/tags/new',
+                    'icon'=>'far fa-plus-square col-2 p-0'
+                ],
+            ]
+        ],
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

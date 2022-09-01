@@ -1,17 +1,15 @@
 @extends('admin')
 @section('content_header')
-    <h1>New post</h1>
+    <h1>New tag</h1>
 @stop
 
 @section ('content')
     <div class="jumbotron">
-        <form action="../posts" method="POST">
+        <form action="../tags" method="POST">
             @csrf
             <div class="form-group">
-                <label for="title" >Title</label>
-                <input type="text" name="title" class="form-control" autofocus required value={{ old('title') }}>
-                <label for="text">Text</label>
-                <textarea name="text" class="form-control" required>{{ old('text') }}</textarea>
+                <label for="name" >Name</label>
+                <input type="text" name="name" class="form-control" autofocus required value={{ old('name') }}>
             </div>
 
             @if($errors->any())
@@ -24,8 +22,8 @@
                 </div>
             @endif
 
-            <button type="submit" class="btn btn-primary">Add new post</button>
+            <button type="submit" class="btn btn-primary">Add new tag</button>
         </form>
-
     </div>
+
 @endsection

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,13 @@ Route::prefix('admin/posts')->group(function (){
     Route::get('{post}', [\App\Http\Controllers\admin\PostController::class, 'show']);
     Route::put('{post}', [\App\Http\Controllers\admin\PostController::class, 'update']);
     Route::delete('{post}/destroy', [\App\Http\Controllers\admin\PostController::class, 'destroy']);
+});
+
+Route::prefix('admin/tags')->group(function (){
+    Route::get('', [\App\Http\Controllers\admin\TagController::class, 'index']);
+    Route::post('', [\App\Http\Controllers\admin\TagController::class, 'store']);
+    Route::get('new', [\App\Http\Controllers\admin\TagController::class, 'create']);
+    Route::get('{tag}', [\App\Http\Controllers\admin\TagController::class, 'show']);
+    Route::put('{tag}', [\App\Http\Controllers\admin\TagController::class, 'update']);
+    Route::delete('{tag}/destroy', [\App\Http\Controllers\admin\TagController::class, 'destroy']);
 });

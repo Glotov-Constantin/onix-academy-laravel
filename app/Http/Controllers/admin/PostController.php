@@ -20,8 +20,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = Post::paginate(10);
         return view('admin.posts.index', [
-            'posts'=>Post::all(),
+            'posts'=>$posts,
         ]);
     }
 
@@ -40,7 +41,7 @@ class PostController extends Controller
         $post->text = $data['text'];
         $post->save();
 
-        return redirect('/posts/'.$post->id);
+        return redirect('/admin/posts/'.$post->id);
     }
 
     /**
@@ -68,7 +69,7 @@ class PostController extends Controller
         $post->title = $data['title'];
         $post->text = $data['text'];
         $post->save();
-        return redirect('/posts/'.$post->id);
+        return redirect('/admin/posts/'.$post->id);
     }
 
     /**
@@ -80,7 +81,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect('/posts/');
+        return redirect('/admin/posts/');
     }
 
     /**
