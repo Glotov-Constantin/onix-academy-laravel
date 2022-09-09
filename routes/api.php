@@ -33,4 +33,5 @@ Route::prefix('posts')->group(function (){
 Route::prefix('users')->group(function (){
     Route::get('', [\App\Http\Controllers\Api\UserController::class, 'index']);
     Route::get('{user}', [\App\Http\Controllers\Api\UserController::class, 'show']);
+    Route::post('create', [\App\Http\Controllers\Api\UserController::class, 'store']);
 });

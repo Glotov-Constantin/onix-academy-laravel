@@ -16,6 +16,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+//    protected static function boot(){
+//        User::observe(UserObserver);
+//    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -109,6 +113,14 @@ class User extends Authenticatable
             $query->having('posts_count', '>',0);
         }
 
+    }
+
+    public function getFullNameAttribute(){
+        return $this->name;
+    }
+
+    public function setFullNameAttribute($value){
+        $this->name = $value;
     }
 
 }

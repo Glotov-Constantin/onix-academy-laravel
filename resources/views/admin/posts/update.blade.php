@@ -36,6 +36,6 @@
                 <button type="submit" class="btn btn-danger">Delete post</button>
             </form>
         </div>
-
+        <p>{{Request::session()->get('msg')}}</p>
     </div>
 @endsection

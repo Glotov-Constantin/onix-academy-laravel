@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateFormRequest;
 //use http\Client\Curl\User;
@@ -39,6 +40,24 @@ class UserController extends Controller
         public function show(User $user)
         {
             return new UserResource($user);
+        }
+
+        public function store(Request $request)
+        {
+            $user= new User();
+            $user->name=$request->name;
+            $user->first_name=$request->first_name;
+            $user->last_name=$request->last_name;
+            $user->email=$request->email;
+            $user->password=$request->password;
+            $user->total_posts=0;
+            $user->save();
+            if ($user){
+                return response()->json('User created', 200);
+            }
+            else{
+                return response()->json('Created user has been failed');
+            }
         }
 
     }

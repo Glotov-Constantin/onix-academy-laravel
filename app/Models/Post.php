@@ -11,6 +11,7 @@ use phpDocumentor\Reflection\Types\String_;
 
 /**
  * @property User $user
+ * @property integer $user_id
  */
 
 class Post extends Model
