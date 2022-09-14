@@ -27,6 +27,7 @@ class SavePostRequest extends FormRequest
             'title' => 'required|min:5|max:150',
 //            'keywords' =>'',
             'text' => 'required|min:10',
+            'user_id' => 'required'
 //            'email' => 'required|unique:posts|max:255',
 //            'cover' => 'mimes:png,jpeg,gif'
         ];

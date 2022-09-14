@@ -12,6 +12,12 @@
             <textarea name="title" class="form-control" required>{{$post->title}}</textarea>
             <label for="text">Text</label>
             <textarea name="text" class="form-control" required>{{$post->text}}</textarea>
+            <label for="user_id">User id</label>
+            <select name="user_id" class="form-select" required>
+                @foreach($users as $user)
+                    <option value="{{$user->id}}"{{ $post->user_id == $user->id ? 'selected':'' }}>{{$user->id}}. {{$user->full_name}}</option>
+                @endforeach
+            </select>
         </div>
 
 

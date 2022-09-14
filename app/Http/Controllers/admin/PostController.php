@@ -8,6 +8,7 @@ use App\Http\Requests\SavePostRequest;
 use App\Http\Requests\UpdateFormRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 //use Illuminate\Http\Request;
 
@@ -39,6 +40,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $data['title'];
         $post->text = $data['text'];
+        $post->user_id = $data['user_id'];
         $post->save();
 
         return redirect('/admin/posts/'.$post->id);
@@ -52,7 +54,8 @@ class PostController extends Controller
      */
     public function show(Post $post): View
     {
-        return view('admin.posts.update', ['post'=>$post]);
+        $users=User::all();
+        return view('admin.posts.update', ['post'=>$post], ['users'=>$users]);
     }
 
     /**
@@ -68,6 +71,7 @@ class PostController extends Controller
         $data = $request->validated();
         $post->title = $data['title'];
         $post->text = $data['text'];
+        $post->user_id = $data['user_id'];
         $post->save();
         return redirect('/admin/posts/'.$post->id);
     }
@@ -88,7 +92,8 @@ class PostController extends Controller
      * @return View
      */
     public function create(){
-        return view('admin.posts.create');
+        $users=User::all();
+        return view('admin.posts.create', ['users'=>$users]);
     }
 
 
